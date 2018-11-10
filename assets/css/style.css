@@ -1,0 +1,68 @@
+body{
+    margin-top: 2%;
+    background-color: gray;
+}
+#title{
+    font-size: 64px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 24px;
+    color: white;
+    text-shadow: 2px 1px black;
+    background-color: #abe1fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name,.table,{
+    color: white;
+    text-shadow: 2px 1px black;
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 24px;
+}
+.trainScheduleSection{
+    font-size: 20px;
+    color: black;
+    text-shadow: 2px 1px #abe1fa;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 24px;
+}
+#currentTrainTitle{
+    font-size: 35px;
+    color: white;
+    text-shadow: 2px 1px black;
+}
+
+.container-fluid{
+    border: 1px solid black;
+    margin-top: 40px;
+    border-radius: 24px;
+    background-color: #abe1fa;
+}
+#AddTrainTitle, #currentTrainTitle{
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 1px black;   
+}
+
+hr{
+    margin-top: 0%;
+}
+.inputBox{
+    width: 100%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 12px;
+    font-size: 20px;
+
+}
+
+.labelName{
+    font-size: 20px;
+    color: white;
+    text-shadow: 1px 1px black;
+}

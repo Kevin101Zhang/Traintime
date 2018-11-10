@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Train Time</title>
+    <!-- Linking Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- Linking Reset -->
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <!-- Linking CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Linking Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="title">
+            <h1>Firebase Train Line</h1>
+            <br><br>
+        </div>
+
+        <div class="container-fluid">
+
+            <h1 id="currentTrainTitle">Current Train Schedule</h1>
+            <div class="row text-center trainScheduleSection">
+                <div class="col trainSchedule">
+                    <table class="table">
+                        <thead class="scheduleTableHeader">
+                            <tr>
+                                <th class="name" scope="col">Train Name</th>
+                                <th class="name" scope="col">Destination</th>
+                                <th class="name" scope="col">Frequency</th>
+                                <th class="name" scope="col">Arrival Time</th>
+                                <th class="name" scope="col">Next Train (Min)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="PutStuffHere">
+                            <th id="PutTrainName" class="name" scope="col"></th>
+                            <th id="PutTrainDestination" class="name" scope="col"></th>
+                            <th id="PutTrainFrequency" class="name" scope="col"></th>
+                            <th id="PutTrainTime" class="name" scope="col"></th>
+                            <th id="PutNextTrainTime" class="name" scope="col"></th>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class='container-fluid'>
+            <h1 id="AddTrainTitle">Add a Train</h1>
+            <hr>
+            <form id="FormReset">
+                <p class="labelName">Train Name</p>
+                <input id="Train-Name" class="inputBox" type="text" name="TrainName" val="">
+                <br>
+
+                <p class="labelName">Destination</p>
+                <input id="Train-Destination" class="inputBox" type="text" name="Destination">
+                <br>
+
+                <p class="labelName">First Train Time(HH:mm - Military Time)</p>
+                <input id="Train-Time" class="inputBox" type="text" name="TrainTime">
+                <br>
+
+                <p class="labelName">Frequency</p>
+                <input id="Train-Frequency" class="inputBox" type="text" name="Frequency">
+                <br><br>
+
+                <input id="submitTrain" type="submit" value="Submit">
+            </form>
+        </div>
+
+
+
+    </div>
+
+    <!-- Linking Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Linking Moment -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <!-- Linking JS -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
