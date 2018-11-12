@@ -1,5 +1,4 @@
 //Initialize Firebase
-console.log("hello");
 var config = {
     apiKey: "AIzaSyDqarUHPHMKM3Megflg4nVgQ-p3wpLT2Yo",
     authDomain: "traintime-9b0db.firebaseapp.com",
@@ -11,49 +10,96 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var ref = database.ref('Railroad');
+var Tref = database.ref('Railroad');
+database.ref().on("value", function (snapshot) {
+    // console.log(snapshot);
+    // console.log(snapshot.val().Railroad);
 
-var initialData = {
-    'Train Name': ['Long Island Railroad', "Amtrak", "Trainer"],
-    'Train Destination': ['Penn Station', "New Jersey", "Babylon"],
-    'Train Frequency': [4, 2, 3],
-    'Train Time': ['12:00', '7:00', '4:30'],
-    'Train Next Time': ['null', 'null', 'null']
-}
-ref.remove();
-ref.push(initialData);
-PutDataInDom();
+    // database.ref("Railroad").set({
+    //     1: {
+    //         Train: 'Long-Island-Railroad',
+    //         Destination: 'Penn Station',
+    //         Frequency: 4,
+    //         Time: '5:00',
+    //     }, 2: {
+    //         Train: 'Amktrak',
+    //         Destination: 'Babylon',
+    //         Frequency: 3,
+    //         Time: '6:15',
+    //     }, 3: {
+    //         Train: 'Acela',
+    //         Destination: 'Long Island',
+    //         Frequency: 2,
+    //         Time: '12:45',
+    //     }, 4: {
+    //         Train: 'Spencer',
+    //         Destination: 'Astoria',
+    //         Frequency: 9999,
+    //         Time: '3:30',
+    //     },
+    // });
 
-function PutDataInDom() {
-    for (var i = 0; i < initialData["Train Name"].length; i++) {
-        $("#PutTrainName").prepend('<p>' + initialData["Train Name"][i] + '</p><hr>');
-        $("#PutTrainDestination").prepend('<p>' + initialData["Train Destination"][i] + '</p><hr>');
-        $("#PutTrainFrequency").prepend('<p>' + initialData["Train Frequency"][i] + '</p><hr>');
-        $("#PutTrainTime").prepend('<p>' + initialData["Train Time"][i] + '</p><hr>');
-        $("#PutNextTrainTime").prepend('<p>' + initialData["Train Next Time"][i] + '</p><hr>')
+    const trainData = snapshot.val().Railroad;
+
+    Object.keys(trainData).forEach(function (key) {
+
+        $("#PutTrainName").prepend('<p>' + trainData[key]['Train'] + '</p><hr>');
+        $("#PutTrainDestination").prepend('<p>' + trainData[key]['Destination'] + '</p><hr>');
+        $("#PutTrainFrequency").prepend('<p>' + trainData[key]['Frequency'] + '</p><hr>');
+        $("#PutTrainTime").prepend('<p>' + trainData[key]['Time'] + '</p><hr>');
+
+        // Live Time Converted to Mins
+        var realCurrentTimeHours = parseInt((moment().format('H') * 60));
+        var realCurrentTimeMins = parseInt((moment().format('mm')));
+
+        var totalMins = realCurrentTimeHours + realCurrentTimeMins;
+
+
+        // Train Time Converted to Mins
+        var Traintime = trainData[key]['Time'];
+        TraintimeHours = parseInt(Traintime);
+        TraintimeMins = TraintimeHours * 60;
+        
+        //Mins Leftover For Train to Arrive
+        var MinsLeftOver = Math.abs(TraintimeMins - totalMins);
+        console.log(MinsLeftOver);
+
+        // Converting Back to Mins and Hours
+        var HoursLeft = Math.round(MinsLeftOver / 60);
+        var MinsLeft = 60 - (MinsLeftOver % 60);
+
+        // Time LeftOver
+        $("#PutNextTrainTime").prepend('<p>' + HoursLeft + ':' + MinsLeft + '</p><hr>');
+    });
+
+    $("#submitTrain").on("click", function () {
+        event.preventDefault();
+
+        var trainName = $("#Train-Name").val().trim();
+        var trainDestination = $("#Train-Destination").val().trim();
+        var trainFrequency = $("#Train-Frequency").val();
+        var trainTime = $("#Train-Time").val().trim();
+
+        var NewData = {
+            'Train': trainName,
+            'Destination': trainDestination,
+            'Frequency': trainFrequency,
+            'Time': trainTime,
+        }
+        $("#PutTrainName").empty();
+        $("#PutTrainDestination").empty();
+        $("#PutTrainFrequency").empty();
+        $("#PutTrainTime").empty();
+        $("#PutNextTrainTime").empty();
+        Tref.push(NewData);
+    });
+
+    //lets do moment.js
+    function updateTime() {
+        $('#clock').html(moment().format('D. MMMM YYYY H:mm:ss'));
     }
-}
-//now be able to add new data into firebase and put in DOM on submit
+    setInterval(updateTime, 1000);
 
-$("#submitTrain").on("click", function () {
-    event.preventDefault();
-
-    var trainName = $("#Train-Name").val().trim();
-    var trainDestination = $("#Train-Destination").val().trim();
-    var trainFrequency = $("#Train-Frequency").val();
-    var trainTime = $("#Train-Time").val().trim();
-
-    initialData["Train Name"].push(trainName);
-    initialData["Train Destination"].push(trainDestination);
-    initialData["Train Frequency"].push(trainFrequency);
-    initialData["Train Time"].push(trainTime);
-
-    ref.remove();
-    ref.push(initialData);
-    $("#PutTrainName").empty();
-    $("#PutTrainDestination").empty();
-    $("#PutTrainFrequency").empty();
-    $("#PutTrainTime").empty();
-    $("#PutNextTrainTime").empty();
-    PutDataInDom();
 });
+
+
